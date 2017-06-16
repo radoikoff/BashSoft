@@ -10,7 +10,11 @@ namespace BashSoft
     {
         public static void Main()
         {
-            IOManager.TraverseDirectory(@"C:\Users\vradoyko\Projects");
+            //IOManager.TraverseDirectory(@"C:\Users\vradoyko\Projects");
+            StudentsRepository.InitializeData();
+            //StudentsRepository.GetAllStudentFromCourse("Unity");
+            StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
+
         }
     }
 }
