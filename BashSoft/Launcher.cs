@@ -10,10 +10,21 @@ namespace BashSoft
     {
         public static void Main()
         {
-            //IOManager.TraverseDirectory(@"C:\Users\vradoyko\Projects");
-            StudentsRepository.InitializeData();
+            //IOManager.TraverseDirectory(10);
+
+            //StudentsRepository.InitializeData();
             //StudentsRepository.GetAllStudentFromCourse("Unity");
-            StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
+            //StudentsRepository.GetStudentScoresFromCourse("Unity", "Ivan");
+
+            //Tester.CompareContent(@"C:\Users\vradoyko\Desktop\user\test2.txt", @"C:\Users\vradoyko\Desktop\user\test3.txt");
+
+            //IOManager.CreateDirectoryInCurrentFolder("vasko");
+
+            //IOManager.ChangeCurrentDirectoryAbsolute(@"C:\windows");
+            //IOManager.ChangeCurrentDirectoryRelative("..");
+
+
+            //IOManager.TraverseDirectory(50);
 
         }
     }
