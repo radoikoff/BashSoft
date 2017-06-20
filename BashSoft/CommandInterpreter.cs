@@ -39,6 +39,9 @@ namespace BashSoft
                 case "help":
                     TryGetHelp(input, data);
                     break;
+                case "show":
+                    TryShowWantedData(input, data);
+                    break;
                 case "filter":
                     break;
                 case "order":
@@ -54,6 +57,25 @@ namespace BashSoft
                     break;
             }
 
+        }
+
+        private static void TryShowWantedData(string input, string[] data)
+        {
+            if (data.Length == 2)
+            {
+                string courseName = data[1];
+                StudentsRepository.GetAllStudentFromCourse(courseName);
+            }
+            else if (data.Length == 3)
+            {
+                string courseName = data[1];
+                string userName = data[2];
+                StudentsRepository.GetStudentScoresFromCourse(courseName, userName);
+            }
+            else
+            {
+                DisplayInvalidCommandMessage(input);
+            }
         }
 
         private static void TryGetHelp(string input, string[] data)
