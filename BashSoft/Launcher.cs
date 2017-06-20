@@ -19,12 +19,11 @@ namespace BashSoft
             //Tester.CompareContent(@"C:\Users\vradoyko\Desktop\user\test2.txt", @"C:\Users\vradoyko\Desktop\user\test3.txt");
 
             //IOManager.CreateDirectoryInCurrentFolder("vasko");
-
             //IOManager.ChangeCurrentDirectoryAbsolute(@"C:\windows");
             //IOManager.ChangeCurrentDirectoryRelative("..");
-
-
             //IOManager.TraverseDirectory(50);
+
+            InputReader.StartReadingCommands();
 
         }
     }
