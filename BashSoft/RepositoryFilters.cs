@@ -14,15 +14,15 @@ namespace BashSoft
 
             if (wantedFilter == "excellent")
             {
-                FilterAndTake(wantedData, ExcellentFilter, studentsToTake);
+                FilterAndTake(wantedData, x => x >= 5, studentsToTake);
             }
             else if (wantedFilter == "average")
             {
-                FilterAndTake(wantedData, AverageFilter, studentsToTake);
+                FilterAndTake(wantedData, x => x < 5 && x >= 3.5, studentsToTake);
             }
             else if (wantedFilter == "poor")
             {
-                FilterAndTake(wantedData, PoorFilter, studentsToTake);
+                FilterAndTake(wantedData, X => X < 3.5, studentsToTake);
             }
             else
             {
@@ -40,28 +40,16 @@ namespace BashSoft
                     break;
                 }
 
-                double averageMark = Average(userNamePoints.Value);
-                if (givenFilter(averageMark))
+                double averageScore = userNamePoints.Value.Average();
+                double percentageOfFullfilment = averageScore / 100;
+                double mark = percentageOfFullfilment * 4 + 2;
+
+                if (givenFilter(mark))
                 {
                     OutputWriter.PrintStudent(userNamePoints);
                     counterForPrinted++;
                 }
             }
-        }
-
-        private static bool ExcellentFilter(double mark)
-        {
-            return mark >= 5.0;
-        }
-
-        private static bool AverageFilter(double mark)
-        {
-            return mark < 5.0 && mark >= 3.5;
-        }
-
-        private static bool PoorFilter(double mark)
-        {
-            return mark < 3.5;
         }
 
         private static double Average(List<int> scoresOnTasks)
