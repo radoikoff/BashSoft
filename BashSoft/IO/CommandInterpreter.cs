@@ -13,7 +13,7 @@ namespace BashSoft
         {
             var data = input.Split();
             string command = data[0];
-            switch (command)
+            switch (command.ToLower())
             {
                 case "open":
                     TryOpenFile(input, data);
@@ -27,13 +27,13 @@ namespace BashSoft
                 case "cmp":
                     TryCompareFiles(input, data);
                     break;
-                case "cdRel":
+                case "cdrel":
                     TryChangePathRelatively(input, data);
                     break;
-                case "cdAbs":
+                case "cdabs":
                     TryChangePathAbsolute(input, data);
                     break;
-                case "readDb":
+                case "readdb":
                     TryReadDatabaseFromFile(input, data);
                     break;
                 case "help":
@@ -48,12 +48,12 @@ namespace BashSoft
                 case "order":
                     TryOrderAndTake(input, data);
                     break;
-                case "decOrder":
+                case "decorder":
                     //not needed. Order takes both asc/desc.
                     break;
                 case "download":
                     break;
-                case "downloadAsynch":
+                case "downloadasynch":
                     break;
                 default:
                     DisplayInvalidCommandMessage(input);
