@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BashSoft
 {
-    public static class Tester
+    public class Tester
     {
-        public static void CompareContent(string userOutputPath, string expectedOutputPath)
+        public void CompareContent(string userOutputPath, string expectedOutputPath)
         {
             OutputWriter.WriteMessageOnNewLine("Reading files...");
 
@@ -33,7 +33,7 @@ namespace BashSoft
 
         }
 
-        private static void PrintOutput(string[] mismatches, bool hasMismatch, string mismatchPath)
+        private void PrintOutput(string[] mismatches, bool hasMismatch, string mismatchPath)
         {
             if (hasMismatch)
             {
@@ -57,7 +57,7 @@ namespace BashSoft
             }
         }
 
-        private static string[] GetLineWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
+        private string[] GetLineWithPossibleMismatches(string[] actualOutputLines, string[] expectedOutputLines, out bool hasMismatch)
         {
             hasMismatch = false;
             var output = string.Empty;
@@ -98,7 +98,7 @@ namespace BashSoft
             return mismatches;
         }
 
-        private static string GetMismatchPath(string expectedOutputPath)
+        private string GetMismatchPath(string expectedOutputPath)
         {
             string dir = Path.GetDirectoryName(expectedOutputPath);
             string mismatchPath = dir + "\\" + @"Mismatch.txt";

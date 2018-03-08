@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BashSoft
 {
-    public class RepositorySorters
+    public class RepositorySorter
     {
-        public static void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentsToTake)
+        public void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentsToTake)
         {
             comparison = comparison.ToLower();
 
@@ -27,7 +27,7 @@ namespace BashSoft
         }
 
 
-        private static void PrintStudents(Dictionary<string, List<int>> studentsSorted)
+        private void PrintStudents(Dictionary<string, List<int>> studentsSorted)
         {
             foreach (var student in studentsSorted)
             {

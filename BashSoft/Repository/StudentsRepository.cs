@@ -8,28 +8,44 @@ using System.Threading.Tasks;
 
 namespace BashSoft
 {
-    public static class StudentsRepository
+    public class StudentsRepository
     {
-        public static bool isDataInitialized = false;
+        private bool isDataInitialized = false;
+        private Dictionary<string, Dictionary<string, List<int>>> studentsByCourse; //courseName, userName, ScoresOnTasks
+        private RepositoryFilter filter;
+        private RepositorySorter sorter;
 
-        private static Dictionary<string, Dictionary<string, List<int>>> studentsByCourse; //courseName, userName, ScoresOnTasks
-
-
-        public static void InitializeData(string fileName)
+        public StudentsRepository(RepositoryFilter filter, RepositorySorter sorter)
         {
-            if (!isDataInitialized)
-            {
-                OutputWriter.WriteMessageOnNewLine("Rading Data...");
-                studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
-                ReadData(fileName);
-            }
-            else
-            {
-                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
-            }
+            this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
+            this.filter = filter;
+            this.sorter = sorter;
         }
 
-        private static void ReadData(string fileName)
+        public void LoadData(string fileName)
+        {
+            if (this.isDataInitialized)
+            {
+                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
+                return;
+            }
+
+            OutputWriter.WriteMessageOnNewLine("Rading Data...");
+            ReadData(fileName);
+        }
+
+        public void UnloadData()
+        {
+            if (!this.isDataInitialized)
+            {
+                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
+                return;
+            }
+            this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
+            this.isDataInitialized = false;
+        }
+
+        private void ReadData(string fileName)
         {
             string path = SessionData.currentPath + "\\" + fileName;
             if (File.Exists(path))
@@ -73,7 +89,7 @@ namespace BashSoft
             }
         }
 
-        private static bool IsQueryForCoursePossible(string courseName)
+        private bool IsQueryForCoursePossible(string courseName)
         {
             if (isDataInitialized)
             {
@@ -95,7 +111,7 @@ namespace BashSoft
             return false;
         }
 
-        private static bool IsQueryForStudentPossiblе(string courseName, string studentUserName)
+        private bool IsQueryForStudentPossiblе(string courseName, string studentUserName)
         {
             if (IsQueryForCoursePossible(courseName) && studentsByCourse[courseName].ContainsKey(studentUserName))
             {
@@ -108,7 +124,7 @@ namespace BashSoft
             return false;
         }
 
-        public static void GetStudentScoresFromCourse(string courseName, string userName)
+        public void GetStudentScoresFromCourse(string courseName, string userName)
         {
             if (IsQueryForStudentPossiblе(courseName, userName))
             {
@@ -116,7 +132,7 @@ namespace BashSoft
             }
         }
 
-        public static void GetAllStudentFromCourse(string courseName)
+        public void GetAllStudentFromCourse(string courseName)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -128,7 +144,7 @@ namespace BashSoft
             }
         }
 
-        public static void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
+        public void FilterAndTake(string courseName, string givenFilter, int? studentsToTake = null)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -137,11 +153,11 @@ namespace BashSoft
                     studentsToTake = studentsByCourse[courseName].Count;
                 }
 
-                RepositoryFilters.FilterAndTake(studentsByCourse[courseName], givenFilter, studentsToTake.Value);
+                this.filter.FilterAndTake(studentsByCourse[courseName], givenFilter, studentsToTake.Value);
             }
         }
 
-        public static void OrderAndTake(string courseName, string comparison, int? studentsToTake = null)
+        public void OrderAndTake(string courseName, string comparison, int? studentsToTake = null)
         {
             if (IsQueryForCoursePossible(courseName))
             {
@@ -150,7 +166,7 @@ namespace BashSoft
                     studentsToTake = studentsByCourse[courseName].Count;
                 }
 
-                RepositorySorters.OrderAndTake(studentsByCourse[courseName], comparison, studentsToTake.Value);
+                this.sorter.OrderAndTake(studentsByCourse[courseName], comparison, studentsToTake.Value);
             }
         }
 

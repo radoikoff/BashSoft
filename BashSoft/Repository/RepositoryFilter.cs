@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BashSoft
 {
-    public class RepositoryFilters
+    public class RepositoryFilter
     {
-        public static void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
+        public void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
         {
             wantedFilter = wantedFilter.ToLower();
 
@@ -30,7 +30,7 @@ namespace BashSoft
             }
         }
 
-        private static void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
+        private void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
         {
             int counterForPrinted = 0;
             foreach (var userNamePoints in wantedData)
@@ -52,7 +52,7 @@ namespace BashSoft
             }
         }
 
-        private static double Average(List<int> scoresOnTasks)
+        private double Average(List<int> scoresOnTasks)
         {
             double totalScore = 0;
             foreach (var score in scoresOnTasks)

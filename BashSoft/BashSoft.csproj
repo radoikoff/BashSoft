@@ -50,11 +50,12 @@
     <Compile Include="Launcher.cs" />
     <Compile Include="IO\OutputWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\RepositoryFilters.cs" />
-    <Compile Include="Repository\RepositorySorters.cs" />
+    <Compile Include="Repository\RepositoryFilter.cs" />
+    <Compile Include="Repository\RepositorySorter.cs" />
     <Compile Include="Static Data\SessionData.cs" />
     <Compile Include="Repository\StudentsRepository.cs" />
     <Compile Include="Judge\Tester.cs" />
+    <Compile Include="Static Data\UserMessages.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

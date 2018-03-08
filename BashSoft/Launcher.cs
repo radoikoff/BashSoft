@@ -23,7 +23,14 @@ namespace BashSoft
             //IOManager.ChangeCurrentDirectoryRelative("..");
             //IOManager.TraverseDirectory(50);
 
-            InputReader.StartReadingCommands();
+            var tester = new Tester();
+            var ioManager = new IOManager();
+            var repo = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
+
+            var cmdInterpreter = new CommandInterpreter(tester, repo, ioManager);
+            var reader = new InputReader(cmdInterpreter);
+
+            reader.StartReadingCommands();
 
         }
     }
