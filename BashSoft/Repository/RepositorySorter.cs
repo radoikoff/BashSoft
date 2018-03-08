@@ -8,17 +8,17 @@ namespace BashSoft
 {
     public class RepositorySorter
     {
-        public void OrderAndTake(Dictionary<string, List<int>> wantedData, string comparison, int studentsToTake)
+        public void OrderAndTake(Dictionary<string, double> studentsWithMarks, string comparison, int studentsToTake)
         {
             comparison = comparison.ToLower();
 
             if (comparison == "ascending")
             {
-                PrintStudents(wantedData.OrderBy(x => x.Value.Sum()).Take(studentsToTake).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+                PrintStudents(studentsWithMarks.OrderBy(x => x.Value).Take(studentsToTake).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
             }
             else if (comparison == "descending")
             {
-                PrintStudents(wantedData.OrderByDescending(x => x.Value.Sum()).Take(studentsToTake).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
+                PrintStudents(studentsWithMarks.OrderByDescending(x => x.Value).Take(studentsToTake).ToDictionary(kvp => kvp.Key, kvp => kvp.Value));
             }
             else
             {
@@ -27,7 +27,7 @@ namespace BashSoft
         }
 
 
-        private void PrintStudents(Dictionary<string, List<int>> studentsSorted)
+        private void PrintStudents(Dictionary<string, double> studentsSorted)
         {
             foreach (var student in studentsSorted)
             {

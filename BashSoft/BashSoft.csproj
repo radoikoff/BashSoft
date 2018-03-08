@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IO\CommandInterpreter.cs" />
+    <Compile Include="Models\Course.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Static Data\ExceptionMessages.cs" />
     <Compile Include="IO\InputReader.cs" />
     <Compile Include="IO\IOManager.cs" />

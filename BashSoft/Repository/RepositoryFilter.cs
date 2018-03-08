@@ -8,21 +8,21 @@ namespace BashSoft
 {
     public class RepositoryFilter
     {
-        public void FilterAndTake(Dictionary<string, List<int>> wantedData, string wantedFilter, int studentsToTake)
+        public void FilterAndTake(Dictionary<string, double> studentsWithMarks, string wantedFilter, int studentsToTake)
         {
             wantedFilter = wantedFilter.ToLower();
 
             if (wantedFilter == "excellent")
             {
-                FilterAndTake(wantedData, x => x >= 5, studentsToTake);
+                FilterAndTake(studentsWithMarks, x => x >= 5, studentsToTake);
             }
             else if (wantedFilter == "average")
             {
-                FilterAndTake(wantedData, x => x < 5 && x >= 3.5, studentsToTake);
+                FilterAndTake(studentsWithMarks, x => x < 5 && x >= 3.5, studentsToTake);
             }
             else if (wantedFilter == "poor")
             {
-                FilterAndTake(wantedData, X => X < 3.5, studentsToTake);
+                FilterAndTake(studentsWithMarks, X => X < 3.5, studentsToTake);
             }
             else
             {
@@ -30,23 +30,19 @@ namespace BashSoft
             }
         }
 
-        private void FilterAndTake(Dictionary<string, List<int>> wantedData, Predicate<double> givenFilter, int studentsToTake)
+        private void FilterAndTake(Dictionary<string, double> studentsWithMarks, Predicate<double> givenFilter, int studentsToTake)
         {
             int counterForPrinted = 0;
-            foreach (var userNamePoints in wantedData)
+            foreach (var studentMark in studentsWithMarks)
             {
                 if (counterForPrinted == studentsToTake)
                 {
                     break;
                 }
 
-                double averageScore = userNamePoints.Value.Average();
-                double percentageOfFullfilment = averageScore / 100;
-                double mark = percentageOfFullfilment * 4 + 2;
-
-                if (givenFilter(mark))
+                if (givenFilter(studentMark.Value))
                 {
-                    OutputWriter.PrintStudent(userNamePoints);
+                    OutputWriter.PrintStudent(studentMark);
                     counterForPrinted++;
                 }
             }
