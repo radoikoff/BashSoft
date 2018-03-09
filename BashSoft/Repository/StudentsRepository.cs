@@ -12,7 +12,6 @@ namespace BashSoft
     public class StudentsRepository
     {
         private bool isDataInitialized = false;
-        //private Dictionary<string, Dictionary<string, List<int>>> studentsByCourse; //courseName, userName, ScoresOnTasks
         private RepositoryFilter filter;
         private RepositorySorter sorter;
         private Dictionary<string, Course> courses;
@@ -21,7 +20,6 @@ namespace BashSoft
 
         public StudentsRepository(RepositoryFilter filter, RepositorySorter sorter)
         {
-            //this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
             this.filter = filter;
             this.sorter = sorter;
         }
@@ -45,10 +43,8 @@ namespace BashSoft
         {
             if (!this.isDataInitialized)
             {
-                OutputWriter.WriteMessageOnNewLine(ExceptionMessages.DataAlreadyInitialisedException);
-                return;
+                throw new ArgumentException(ExceptionMessages.DataAlreadyInitialisedException);
             }
-            //this.studentsByCourse = new Dictionary<string, Dictionary<string, List<int>>>();
             this.courses = null;
             this.students = null;
             this.isDataInitialized = false;
@@ -141,7 +137,7 @@ namespace BashSoft
 
         private bool IsQueryForStudentPossiblе(string courseName, string studentUserName)
         {
-            if (IsQueryForCoursePossible(courseName) && this.courses[courseName].studentsByName.ContainsKey(studentUserName))
+            if (IsQueryForCoursePossible(courseName) && this.courses[courseName].StudentsByName.ContainsKey(studentUserName))
             {
                 return true;
             }
@@ -156,7 +152,7 @@ namespace BashSoft
         {
             if (IsQueryForStudentPossiblе(courseName, userName))
             {
-                OutputWriter.PrintStudent(new KeyValuePair<string, double>(userName, this.courses[courseName].studentsByName[userName].marksByCourseName[courseName]));
+                OutputWriter.PrintStudent(new KeyValuePair<string, double>(userName, this.courses[courseName].StudentsByName[userName].MarksByCourseName[courseName]));
             }
         }
 
@@ -165,7 +161,7 @@ namespace BashSoft
             if (IsQueryForCoursePossible(courseName))
             {
                 OutputWriter.WriteMessageOnNewLine($"{courseName}:");
-                foreach (var studentMarksEntry in this.courses[courseName].studentsByName)
+                foreach (var studentMarksEntry in this.courses[courseName].StudentsByName)
                 {
                     this.GetStudentScoresFromCourse(courseName, studentMarksEntry.Key);
                 }
@@ -178,9 +174,9 @@ namespace BashSoft
             {
                 if (studentsToTake == null)
                 {
-                    studentsToTake = this.courses[courseName].studentsByName.Count;
+                    studentsToTake = this.courses[courseName].StudentsByName.Count;
                 }
-                var marks = this.courses[courseName].studentsByName.ToDictionary(s => s.Key, s => s.Value.marksByCourseName[courseName]);
+                var marks = this.courses[courseName].StudentsByName.ToDictionary(s => s.Key, s => s.Value.MarksByCourseName[courseName]);
                 this.filter.FilterAndTake(marks, givenFilter, studentsToTake.Value);
             }
         }
@@ -191,9 +187,9 @@ namespace BashSoft
             {
                 if (studentsToTake == null)
                 {
-                    studentsToTake = this.courses[courseName].studentsByName.Count;
+                    studentsToTake = this.courses[courseName].StudentsByName.Count;
                 }
-                var marks = this.courses[courseName].studentsByName.ToDictionary(s => s.Key, s => s.Value.marksByCourseName[courseName]);
+                var marks = this.courses[courseName].StudentsByName.ToDictionary(s => s.Key, s => s.Value.MarksByCourseName[courseName]);
                 this.sorter.OrderAndTake(marks, comparison, studentsToTake.Value);
             }
         }

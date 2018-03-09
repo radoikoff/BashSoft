@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,32 @@ namespace BashSoft
         {
             var data = input.Split();
             string command = data[0];
+
+            try
+            {
+                this.ParseCommand(input, command, data);
+            }
+            catch (DirectoryNotFoundException dnfe)
+            {
+                OutputWriter.DisplayException(dnfe.Message);
+            }
+            catch (ArgumentOutOfRangeException aoore)
+            {
+                OutputWriter.DisplayException(aoore.Message);
+            }
+            catch (ArgumentException ae)
+            {
+                OutputWriter.DisplayException(ae.Message);
+            }
+            catch (Exception e)
+            {
+                OutputWriter.DisplayException(e.Message);
+            }
+
+        }
+
+        private void ParseCommand(string input, string command, string[] data)
+        {
             switch (command.ToLower())
             {
                 case "open":
@@ -74,7 +101,6 @@ namespace BashSoft
                     DisplayInvalidCommandMessage(input);
                     break;
             }
-
         }
 
         private void TryDropDb(string input, string[] data)

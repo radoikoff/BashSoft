@@ -26,7 +26,7 @@ namespace BashSoft
             }
             else
             {
-                OutputWriter.DisplayException(ExceptionMessages.InvalidStudentFilter);
+                throw new ArgumentException(ExceptionMessages.InvalidStudentFilter);
             }
         }
 

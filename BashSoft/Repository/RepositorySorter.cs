@@ -22,7 +22,7 @@ namespace BashSoft
             }
             else
             {
-                OutputWriter.DisplayException(ExceptionMessages.InvalidComparisonQuery);
+                throw new ArgumentException(ExceptionMessages.InvalidComparisonQuery);
             }
         }
 

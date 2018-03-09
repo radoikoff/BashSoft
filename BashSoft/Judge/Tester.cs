@@ -26,7 +26,7 @@ namespace BashSoft
                 PrintOutput(mismatches, hasMismatch, mismatchPath);
                 OutputWriter.WriteMessageOnNewLine("Files read!");
             }
-            catch (FileNotFoundException)
+            catch (IOException)
             {
                 OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
             }
@@ -48,7 +48,7 @@ namespace BashSoft
                 }
                 catch (DirectoryNotFoundException)
                 {
-                    OutputWriter.DisplayException(ExceptionMessages.InvalidPath);
+                    throw new DirectoryNotFoundException(ExceptionMessages.InvalidPath);
                 }
             }
             else
@@ -104,11 +104,6 @@ namespace BashSoft
             string mismatchPath = dir + "\\" + @"Mismatch.txt";
             return mismatchPath;
         }
-
-
-
-
-
 
     }
 }
