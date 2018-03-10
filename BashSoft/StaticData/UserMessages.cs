@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BashSoft.Static_Data
+namespace BashSoft
 {
     public static class UserMessages
     {
