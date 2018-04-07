@@ -1,4 +1,5 @@
-﻿using BashSoft.Models;
+﻿using BashSoft.Contracts;
+using BashSoft.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace BashSoft
 {
-    public class StudentsRepository
+    public class StudentsRepository : IDatabase
     {
         private bool isDataInitialized = false;
-        private RepositoryFilter filter;
-        private RepositorySorter sorter;
-        private Dictionary<string, Course> courses;
-        private Dictionary<string, Student> students;
+        private IDataFilter filter;
+        private IDataSorter sorter;
+        private Dictionary<string, ICourse> courses;
+        private Dictionary<string, IStudent> students;
 
 
-        public StudentsRepository(RepositoryFilter filter, RepositorySorter sorter)
+        public StudentsRepository(IDataFilter filter, IDataSorter sorter)
         {
             this.filter = filter;
             this.sorter = sorter;
@@ -32,8 +33,8 @@ namespace BashSoft
                 return;
             }
 
-            this.courses = new Dictionary<string, Course>();
-            this.students = new Dictionary<string, Student>();
+            this.courses = new Dictionary<string, ICourse>();
+            this.students = new Dictionary<string, IStudent>();
 
             OutputWriter.WriteMessageOnNewLine("Rading Data...");
             ReadData(fileName);
@@ -75,19 +76,19 @@ namespace BashSoft
                                 OutputWriter.DisplayException(ExceptionMessages.InvalidScore);
                             }
 
-                            if (scores.Length > Course.NumberOfTasksOnExam)
+                            if (scores.Length > SoftUniCourse.NumberOfTasksOnExam)
                             {
                                 OutputWriter.DisplayException(ExceptionMessages.InvalidNumberOfScores);
                             }
 
                             if (!this.students.ContainsKey(userName))
                             {
-                                this.students.Add(userName, new Student(userName));
+                                this.students.Add(userName, new SoftUniStudent(userName));
                             }
 
                             if (!this.courses.ContainsKey(courseName))
                             {
-                                this.courses.Add(courseName, new Course(courseName));
+                                this.courses.Add(courseName, new SoftUniCourse(courseName));
                             }
 
                             var course = this.courses[courseName];

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BashSoft.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,12 +24,12 @@ namespace BashSoft
             //IOManager.ChangeCurrentDirectoryRelative("..");
             //IOManager.TraverseDirectory(50);
 
-            var tester = new Tester();
-            var ioManager = new IOManager();
-            var repo = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
+            IContentComparer tester = new Tester();
+            IDirectoryManager ioManager = new IOManager();
+            IDatabase repo = new StudentsRepository(new RepositoryFilter(), new RepositorySorter());
 
-            var cmdInterpreter = new CommandInterpreter(tester, repo, ioManager);
-            var reader = new InputReader(cmdInterpreter);
+            IInterpreter cmdInterpreter = new CommandInterpreter(tester, repo, ioManager);
+            IReader reader = new InputReader(cmdInterpreter);
 
             reader.StartReadingCommands();
 
