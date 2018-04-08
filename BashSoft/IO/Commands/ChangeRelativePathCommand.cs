@@ -1,17 +1,17 @@
-﻿using BashSoft.Contracts;
+﻿using BashSoft.Attributes;
+using BashSoft.Contracts;
 using BashSoft.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BashSoft.IO.Commands
 {
+    [Alias("cdrel")]
     public class ChangeRelativePathCommand : Command
     {
-        public ChangeRelativePathCommand(string input, string[] data, IContentComparer judge, IDatabase repository, IDirectoryManager inputOutputManager)
-            : base(input, data, judge, repository, inputOutputManager)
+        [Inject]
+        private IDirectoryManager inputOutputManager;
+
+        public ChangeRelativePathCommand(string input, string[] data)
+            : base(input, data)
         {
         }
 
@@ -22,7 +22,7 @@ namespace BashSoft.IO.Commands
                 throw new InvalidCommandException(this.Input);
             }
             string relativePath = this.Data[1];
-            this.InputOutputManager.ChangeCurrentDirectoryRelative(relativePath);
+            this.inputOutputManager.ChangeCurrentDirectoryRelative(relativePath);
         }
     }
 }
