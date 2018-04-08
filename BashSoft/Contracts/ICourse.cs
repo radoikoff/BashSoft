@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace BashSoft.Contracts
 {
-    public interface ICourse
+    public interface ICourse : IComparable<ICourse>
     {
         string Name { get; }
 
-        IReadOnlyDictionary<string, IStudent> StudentsByName { get;}
+        IReadOnlyDictionary<string, IStudent> StudentsByName { get; }
 
         void EnrollStudent(IStudent student);
     }

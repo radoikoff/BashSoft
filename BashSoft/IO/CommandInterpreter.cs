@@ -68,7 +68,9 @@ namespace BashSoft
                     return new PrintFilteredStudentsCommand(input, data, this.judge, this.repository, this.inputOutputManager);
                 case "order":
                     return new PrintOrderedStudentsCommand(input, data, this.judge, this.repository, this.inputOutputManager);
-                case "decorder":
+                case "display":
+                    return new DisplayCommand(input, data, this.judge, this.repository, this.inputOutputManager);
+                //case "decorder":
                 //    //not needed. Order takes both asc/desc.
                 //    break;
                 //case "download":
