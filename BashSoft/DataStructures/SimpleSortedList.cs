@@ -54,6 +54,11 @@ namespace BashSoft.DataStructures
 
         public void Add(T element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("Element to add cannot be null!");
+            }
+
             if (this.innerCollection.Length == this.Size)
             {
                 Resize();
@@ -65,6 +70,11 @@ namespace BashSoft.DataStructures
 
         public void AddAll(ICollection<T> collection)
         {
+            if (collection == null)
+            {
+                throw new ArgumentNullException("Collection to add cannot be null!");
+            }
+
             if (this.Size + collection.Count >= this.innerCollection.Length)
             {
                 MultiResize(collection);
@@ -80,24 +90,34 @@ namespace BashSoft.DataStructures
 
         public string JoinWith(string joiner)
         {
+            if (joiner == null)
+            {
+                throw new ArgumentNullException("string to join with cannot be null!");
+            }
+
             StringBuilder sb = new StringBuilder();
             foreach (var element in this)
             {
                 sb.Append(element);
                 sb.Append(joiner);
             }
-            sb.Remove(sb.Length - 1, 1);
+            sb.Remove(sb.Length - joiner.Length, joiner.Length);
             return sb.ToString();
         }
 
         public bool Remove(T element)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("Element to be removed cannot be null!");
+            }
+
             bool hasBeenRemoved = false;
             int indexOfRemovedElement = 0;
 
             for (int i = 0; i < this.Size; i++)
             {
-                if (this.innerCollection.Equals(element))
+                if (this.innerCollection[i].Equals(element))
                 {
                     indexOfRemovedElement = i;
                     this.innerCollection[i] = default(T);
@@ -113,6 +133,7 @@ namespace BashSoft.DataStructures
                     this.innerCollection[i] = this.innerCollection[i + 1];
                 }
                 this.innerCollection[this.Size - 1] = default(T);
+                this.size--;
             }
 
             return hasBeenRemoved;
