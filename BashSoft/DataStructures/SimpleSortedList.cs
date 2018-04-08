@@ -50,6 +50,8 @@ namespace BashSoft.DataStructures
 
         public int Size => this.size;
 
+        public int Capacity => this.innerCollection.Length;
+
         public void Add(T element)
         {
             if (this.innerCollection.Length == this.Size)
@@ -76,8 +78,6 @@ namespace BashSoft.DataStructures
             Array.Sort(innerCollection, 0, size, comparison);
         }
 
-
-
         public string JoinWith(string joiner)
         {
             StringBuilder sb = new StringBuilder();
@@ -88,6 +88,34 @@ namespace BashSoft.DataStructures
             }
             sb.Remove(sb.Length - 1, 1);
             return sb.ToString();
+        }
+
+        public bool Remove(T element)
+        {
+            bool hasBeenRemoved = false;
+            int indexOfRemovedElement = 0;
+
+            for (int i = 0; i < this.Size; i++)
+            {
+                if (this.innerCollection.Equals(element))
+                {
+                    indexOfRemovedElement = i;
+                    this.innerCollection[i] = default(T);
+                    hasBeenRemoved = true;
+                    break;
+                }
+            }
+
+            if (hasBeenRemoved)
+            {
+                for (int i = indexOfRemovedElement; i < this.Size - 1; i++)
+                {
+                    this.innerCollection[i] = this.innerCollection[i + 1];
+                }
+                this.innerCollection[this.Size - 1] = default(T);
+            }
+
+            return hasBeenRemoved;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -121,5 +149,6 @@ namespace BashSoft.DataStructures
             Array.Copy(this.innerCollection, newCollection, this.Size);
             this.innerCollection = newCollection;
         }
+
     }
 }

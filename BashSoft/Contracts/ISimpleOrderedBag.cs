@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BashSoft.Contracts
 {
@@ -15,5 +12,9 @@ namespace BashSoft.Contracts
         int Size { get; }
 
         string JoinWith(string joiner);
+
+        bool Remove(T element);
+
+        int Capacity { get; }
     }
 }
