@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BashSoft.Exceptions;
-using BashSoft.Contracts;
+﻿using BashSoft.Exceptions;
+using BashSoft.Attributes;
 
 namespace BashSoft.IO.Commands
 {
+    [Alias("help")]
     public class GetHelpCommand : Command
     {
-        public GetHelpCommand(string input, string[] data, IContentComparer judge, IDatabase repository, IDirectoryManager inputOutputManager)
-            : base(input, data, judge, repository, inputOutputManager)
+        public GetHelpCommand(string input, string[] data)
+            : base(input, data)
         {
         }
 
