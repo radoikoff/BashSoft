@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 
@@ -179,6 +180,72 @@ namespace BashSoftTesting
             string result = names.JoinWith(separator);
 
             Assert.That(result, Is.EqualTo(string.Join(separator, input.OrderBy(n => n))));
+        }
+
+        [Test]
+        [TestCase(new int[] { 66, 5, 131, 8, -12, 0 })]
+        [TestCase(new int[] { 1, 2, 3, 4 })]
+        [TestCase(new int[] { 0, 0, 0 })]
+        [TestCase(new int[] { })]
+
+        public void TestSortByInsertion_withInt32(int[] input)
+        {
+            SimpleSortedList<int> digits = new SimpleSortedList<int>();
+            IComparer<int> comparer = Comparer<int>.Create((x, y) => x.CompareTo(y));
+
+            digits.SortByInsertion(input, input.Length, comparer);
+
+            Assert.That(input, Is.EquivalentTo(input.OrderBy(x => x)));
+
+        }
+
+        [Test]
+        public void TestSortByInsertion_withString()
+        {
+            SimpleSortedList<string> stringData = new SimpleSortedList<string>();
+            IComparer<string> comparer = Comparer<string>.Create((x, y) => x.CompareTo(y));
+
+            string[] input = new string[] { "BBBB", "aaaaa", "cccc", "Youu", "eeee", "dd" };
+            string[] result = new string[] { "aaaaa", "BBBB", "cccc", "dd", "eeee", "Youu" };
+
+            stringData.SortByInsertion(input, input.Length, comparer);
+
+            Assert.That(input, Is.EquivalentTo(result));
+
+        }
+
+        [Test]
+        public void TestSortByInsertion_withEmptyArray()
+        {
+            SimpleSortedList<string> stringData = new SimpleSortedList<string>();
+            IComparer<string> comparer = Comparer<string>.Create((x, y) => x.CompareTo(y));
+
+            string[] input = new string[] { };
+            string[] result = new string[] { };
+
+            stringData.SortByInsertion(input, input.Length, comparer);
+
+            Assert.That(input, Is.EquivalentTo(result));
+
+        }
+
+        [Test]
+        public void TestSortByInsertion_withNull()
+        {
+            SimpleSortedList<string> digits = new SimpleSortedList<string>();
+            IComparer<string> comparer = Comparer<string>.Create((x, y) => x.CompareTo(y));
+
+            string[] input = null;
+            try
+            {
+                digits.SortByInsertion(input, input.Length, comparer);
+                Assert.Fail();
+            }
+            catch (NullReferenceException)
+            {
+                Assert.Pass(typeof(NullReferenceException).Name);
+            }
+
         }
     }
 }
