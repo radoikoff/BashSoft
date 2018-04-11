@@ -65,7 +65,8 @@ namespace BashSoft.DataStructures
             }
             this.innerCollection[size] = element;
             this.size++;
-            Array.Sort(innerCollection, 0, size, comparison);
+            this.SortByInsertion(this.innerCollection, this.Size, this.comparison);
+            //Array.Sort(innerCollection, 0, size, comparison);
         }
 
         public void AddAll(ICollection<T> collection)
@@ -85,7 +86,8 @@ namespace BashSoft.DataStructures
                 this.innerCollection[size] = element;
                 this.size++;
             }
-            Array.Sort(innerCollection, 0, size, comparison);
+            this.SortByInsertion(this.innerCollection, this.Size, this.comparison);
+            //Array.Sort(innerCollection, 0, size, comparison);
         }
 
         public string JoinWith(string joiner)
@@ -169,6 +171,22 @@ namespace BashSoft.DataStructures
             T[] newCollection = new T[newSize];
             Array.Copy(this.innerCollection, newCollection, this.Size);
             this.innerCollection = newCollection;
+        }
+
+        public void SortByInsertion(T[] collection, int size, IComparer<T> comparer)
+        {
+            for (int i = 1; i < size; i++)
+            {
+                int insertIndex = i;
+                T element = collection[i];
+                for (int j = i - 1; j >= 0 && (comparer.Compare(collection[j], element)) > 0; j--)
+                {
+                    collection[j + 1] = collection[j];
+                    insertIndex = j;
+                }
+
+                collection[insertIndex] = element;
+            }
         }
 
     }
